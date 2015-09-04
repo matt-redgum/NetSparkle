@@ -511,20 +511,27 @@ namespace NetSparkle
         {
             if (UserWindow != null)
             {
+                Debug.WriteLine("ShowUpdateNeededUIInner: User window is not null - clearing events");
                 // remove old user window
                 UserWindow.UserResponded -= OnUserWindowUserResponded;
             }
-
+            
             // create the form
+            Debug.WriteLine("ShowUpdateNeededUIInner: Creating new sparkle form");
             UserWindow = UIFactory.CreateSparkleForm(updates, _applicationIcon);
 
             if (HideReleaseNotes)
             {
+                Debug.WriteLine("ShowUpdateNeededUIInner: Hiding release notes");
                 UserWindow.HideReleaseNotes();
             }
 
             // clear if already set.
+            Debug.WriteLine("ShowUpdateNeededUIInner: Setting user window event handle events");
             UserWindow.UserResponded += OnUserWindowUserResponded;
+            Application.DoEvents();
+            Debug.WriteLine("ShowUpdateNeededUIInner: Showing window");
+
             UserWindow.Show();
         }
 

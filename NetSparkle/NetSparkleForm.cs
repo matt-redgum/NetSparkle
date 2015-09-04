@@ -44,25 +44,25 @@ namespace NetSparkle
             InitializeComponent();
 
             // init ui 
-            try
-            {
-                NetSparkleBrowser.AllowWebBrowserDrop = false;
-                NetSparkleBrowser.AllowNavigation = false;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Error in browser init: " + ex.Message);
-            }
+            //try
+            //{
+            //    NetSparkleBrowser.AllowWebBrowserDrop = false;
+            //    NetSparkleBrowser.AllowNavigation = false;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine("Error in browser init: " + ex.Message);
+            //}
 
             NetSparkleAppCastItem item = items[0];
 
             lblHeader.Text = lblHeader.Text.Replace("APP", item.AppName);
             lblInfoText.Text = lblInfoText.Text.Replace("APP", item.AppName + " " + item.Version);
-            lblInfoText.Text = lblInfoText.Text.Replace("OLDVERSION", item.AppVersionInstalled);
+            //lblInfoText.Text = lblInfoText.Text.Replace("OLDVERSION", item.AppVersionInstalled);
 
             if (items.Length == 0)
             {
-                RemoveReleaseNotesControls();
+                //RemoveReleaseNotesControls();
             }
             else
             {
@@ -76,7 +76,9 @@ namespace NetSparkle
                 sb.Append("</body>");
 
                 string releaseNotes = sb.ToString();
-                NetSparkleBrowser.DocumentText = releaseNotes;
+                Debug.WriteLine("Release Notes:");
+                Debug.WriteLine(releaseNotes);
+                //NetSparkleBrowser.DocumentText = releaseNotes;
             }
 
             imgAppIcon.Image = applicationIcon.ToBitmap();
@@ -152,7 +154,7 @@ namespace NetSparkle
         /// </summary>
         void INetSparkleForm.HideReleaseNotes()
         {
-            RemoveReleaseNotesControls();
+            //RemoveReleaseNotesControls();
         }
 
         /// <summary>
@@ -167,29 +169,7 @@ namespace NetSparkle
             }
         }
 
-        /// <summary>
-        /// Removes the release notes control
-        /// </summary>
-        public void RemoveReleaseNotesControls()
-        {
-            if (label3.Parent == null)
-                return;
-
-            // calc new size
-            Size newSize = new Size(Size.Width, Size.Height - label3.Height - panel1.Height);
-
-            // remove the no more needed controls            
-            label3.Parent.Controls.Remove(label3);
-            NetSparkleBrowser.Parent.Controls.Remove(NetSparkleBrowser);
-            panel1.Parent.Controls.Remove(panel1);
-
-            // resize the window
-            /*this.MinimumSize = newSize;
-            this.Size = this.MinimumSize;
-            this.MaximumSize = this.MinimumSize;*/
-            Size = newSize;
-        }
-
+        
         /// <summary>
         /// Event called when the skip button is clicked
         /// </summary>
